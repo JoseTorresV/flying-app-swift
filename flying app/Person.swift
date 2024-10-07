@@ -4,7 +4,6 @@
 //
 //  Created by José Torres on 23/09/24.
 //
-
 import Foundation
 
 struct Person {

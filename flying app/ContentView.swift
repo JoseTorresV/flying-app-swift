@@ -6,14 +6,16 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct ContentView: View {
     
-    @State var selectedTab = 0
+    @State var selectedTab = 0;
+    // Variable create to take my current position
+    @State private var position: MapCameraPosition = .userLocation(fallback: .automatic)
     
     var body: some View {
         TabView {
-            
             VStack {
                 Text("Flying App")
                     .font(.title)
@@ -43,7 +45,18 @@ struct ContentView: View {
             }
             .tag(0)
             
-            Text("Hi")
+            VStack{
+                Map(position: $position){
+                    UserAnnotation()
+                }
+                .mapControls {
+                    MapUserLocationButton()
+                    MapPitchToggle()
+                }
+                .onAppear{
+                    CLLocationManager().requestWhenInUseAuthorization()
+                }
+            }
                 .tabItem {
                     Image(systemName: "pencil")
                     Text("Profile")
